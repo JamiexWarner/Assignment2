@@ -1,0 +1,9 @@
+C:\Users\jamie\source\repos\CMP1124M_Assignment_2\CMP1124M_Assignment_2\bin\Debug\CMP1124M_Assignment_2.exe.config
+C:\Users\jamie\source\repos\CMP1124M_Assignment_2\CMP1124M_Assignment_2\bin\Debug\CMP1124M_Assignment_2.exe
+C:\Users\jamie\source\repos\CMP1124M_Assignment_2\CMP1124M_Assignment_2\bin\Debug\CMP1124M_Assignment_2.pdb
+C:\Users\jamie\source\repos\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.csprojAssemblyReference.cache
+C:\Users\jamie\source\repos\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.Properties.Resources.resources
+C:\Users\jamie\source\repos\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.csproj.GenerateResource.cache
+C:\Users\jamie\source\repos\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.csproj.CoreCompileInputs.cache
+C:\Users\jamie\source\repos\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.exe
+C:\Users\jamie\source\repos\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.pdb
