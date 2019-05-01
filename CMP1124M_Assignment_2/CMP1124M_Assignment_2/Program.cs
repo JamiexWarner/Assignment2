@@ -142,12 +142,14 @@ namespace CMP1124M_Assignment_2
             BST.Tree binary_tree = bst_tree.binary_tree;
             Sorting.sorted_ascending_array.Clear();
             Sorting.sorted_descending_array.Clear();
-            Console.WriteLine(Environment.NewLine + "Ascending order {0}th value:", iterations);
+            Console.WriteLine();
+            Console.WriteLine("These are the values at every {0}th value in ascending order:", iterations);
             Sorting.Binary_st_ascending(bst_tree.curr_root);
             double[] ascending_sorted = Sorting.sorted_ascending_array.ToArray();
             display_values(ascending_sorted, iterations, large_data_set);
             return_vals.ascending_sorted = ascending_sorted;
-            Console.WriteLine(Environment.NewLine + "Desending order {0}th value:", iterations);
+            Console.WriteLine();
+            Console.WriteLine("These are the values at every {0}th value in descending order:", iterations);
             Sorting.Binary_st_descending(bst_tree.curr_root);
             double[] descending_sorted = Sorting.sorted_descending_array.ToArray();
             display_values(descending_sorted, iterations, large_data_set);
@@ -454,7 +456,8 @@ namespace CMP1124M_Assignment_2
             }
             else
             {
-                Console.WriteLine(Environment.NewLine + "Press any button to continue");
+                Console.WriteLine();
+                Console.WriteLine("Press any button to continue");
                 Console.ReadLine();
                 Console.Clear();
             }
