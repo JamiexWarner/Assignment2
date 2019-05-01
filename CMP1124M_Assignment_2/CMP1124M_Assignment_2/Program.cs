@@ -6,15 +6,15 @@ namespace CMP1124M_Assignment_2
 {
     public static class Globals
     {
-        public static double[] High_256 = FileSystem.load_resource(Properties.Resources.High_256);
-        public static double[] High_4096 = FileSystem.load_resource(Properties.Resources.High_4096);
-        public static double[] High_2048 = FileSystem.load_resource(Properties.Resources.High_2048);
-        public static double[] Low_256 = FileSystem.load_resource(Properties.Resources.Low_256);
-        public static double[] Low_2048 = FileSystem.load_resource(Properties.Resources.Low_2048);
-        public static double[] Low_4096 = FileSystem.load_resource(Properties.Resources.Low_4096);
-        public static double[] Mean_2048 = FileSystem.load_resource(Properties.Resources.Mean_2048);
-        public static double[] Mean_256 = FileSystem.load_resource(Properties.Resources.Mean_256);
-        public static double[] Mean_4096 = FileSystem.load_resource(Properties.Resources.Mean_4096);
+        public static double[] High_256 = FileSystem.resources(Properties.Resources.High_256);
+        public static double[] High_4096 = FileSystem.resources(Properties.Resources.High_4096);
+        public static double[] High_2048 = FileSystem.resources(Properties.Resources.High_2048);
+        public static double[] Low_256 = FileSystem.resources(Properties.Resources.Low_256);
+        public static double[] Low_2048 = FileSystem.resources(Properties.Resources.Low_2048);
+        public static double[] Low_4096 = FileSystem.resources(Properties.Resources.Low_4096);
+        public static double[] Mean_2048 = FileSystem.resources(Properties.Resources.Mean_2048);
+        public static double[] Mean_256 = FileSystem.resources(Properties.Resources.Mean_256);
+        public static double[] Mean_4096 = FileSystem.resources(Properties.Resources.Mean_4096);
     }
 
     class Program
@@ -72,7 +72,7 @@ namespace CMP1124M_Assignment_2
 
     class FileSystem
     {
-        public static double[] load_resource(string resource)
+        public static double[] resources(string resource)
         {
             try
             {
@@ -163,12 +163,14 @@ namespace CMP1124M_Assignment_2
             BST.Tree binary_tree = direct_bst_tree.binary_tree;
             Sorting.sorted_ascending_array.Clear();
             Sorting.sorted_descending_array.Clear();
-            Console.WriteLine(Environment.NewLine + "Ascending order {0}th value:", iterations);
+            Console.WriteLine();
+            Console.WriteLine("These are the values at every {0}th value in ascending order:", iterations);
             Sorting.Binary_st_ascending(direct_bst_tree.curr_root);
             double[] ascending_sorted = Sorting.sorted_ascending_array.ToArray();
             display_values(ascending_sorted, iterations, false);
             return_vals.ascending_sorted = ascending_sorted;
-            Console.WriteLine(Environment.NewLine + "Desending order {0}th value:", iterations);
+            Console.WriteLine();
+            Console.WriteLine("These are the values at every {0}th value in descending order:", iterations);
             Sorting.Binary_st_descending(direct_bst_tree.curr_root);
             double[] descending_sorted = Sorting.sorted_descending_array.ToArray();
             display_values(descending_sorted, iterations, false);
@@ -362,12 +364,11 @@ namespace CMP1124M_Assignment_2
                         difference = diff;
                     }
                 }
-                Console.WriteLine("Sorry mate, couldn't find your num. But {0} at index {1} is pretty close.", closest_value, closest_index);
-                Console.Write(Environment.NewLine + "Alright mate no worries, thanks for looking. (press any key)");
+                Console.WriteLine("Your number couldn't be found, the closest is {0} at index number {1}.", closest_value, closest_index);
             }
         }
 
-        struct Unfound_Replacement
+        struct Num_Substitution
         {
             public double value;
             public int index;
@@ -379,8 +380,8 @@ namespace CMP1124M_Assignment_2
             bool found = false;
             int lower_bound = 0;
             int upper_bound = in_array.Length;
-            Unfound_Replacement closest_smaller = new Unfound_Replacement();
-            Unfound_Replacement closest_bigger = new Unfound_Replacement();
+            Num_Substitution closest_smaller = new Num_Substitution();
+            Num_Substitution closest_bigger = new Num_Substitution();
             int operations = 0;
             while (lower_bound < upper_bound)
             {
@@ -442,19 +443,18 @@ namespace CMP1124M_Assignment_2
                 Console.WriteLine("Search took {0} operations before coming to the following conclusion:", operations);
                 if (diff_bg < diff_sm)
                 {
-                    Console.WriteLine("Couldn't find your {3}, but {0} at index {1} is only {2} away.", closest_bigger.value, closest_bigger.index, diff_bg, request);
+                    Console.WriteLine("Your number {3} couldn't be found, but we found {0} at index number {1}.", closest_bigger.value, closest_bigger.index, diff_bg, request);
                 }
                 else
                 {
-                    Console.WriteLine("Couldn't find your {3}, but {0} at index {1} is only {2} away.", closest_smaller.value, closest_smaller.index, diff_sm, request);
+                    Console.WriteLine("Your number {3} couldn't be found, but we found {0} at index number {1}.", closest_smaller.value, closest_smaller.index, diff_sm, request);
                 }
-                Console.WriteLine(Environment.NewLine + "No worries mate, thanks for looking. (press any key to continue)");
                 Console.ReadLine();
                 Console.Clear();
             }
             else
             {
-                Console.WriteLine(Environment.NewLine + "Press any key to continue...");
+                Console.WriteLine(Environment.NewLine + "Press any button to continue");
                 Console.ReadLine();
                 Console.Clear();
             }
