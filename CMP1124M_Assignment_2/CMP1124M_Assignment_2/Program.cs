@@ -121,7 +121,7 @@ namespace CMP1124M_Assignment_2
         public static Arrays_Sorted run_sort(int selection, bool large_data_set)
         {
             Arrays_Sorted return_vals = new Arrays_Sorted();
-            double[] target = chosen_array(selection, false);
+            double[] target = chosen_array(selection, large_data_set);
             int iterations = array_size_finder(target);
             Tree_Data bst_tree = init_tree(target);
             Tree binary_tree = bst_tree.binary_tree;
