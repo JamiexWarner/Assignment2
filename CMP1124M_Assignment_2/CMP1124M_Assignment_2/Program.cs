@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace CMP1124M_Assignment_2
 {
-    public static class Globals
-    {
-        public static double[] High_256 = FileSystem.resources(Properties.Resources.High_256);
-        public static double[] High_4096 = FileSystem.resources(Properties.Resources.High_4096);
-        public static double[] High_2048 = FileSystem.resources(Properties.Resources.High_2048);
-        public static double[] Low_256 = FileSystem.resources(Properties.Resources.Low_256);
-        public static double[] Low_2048 = FileSystem.resources(Properties.Resources.Low_2048);
-        public static double[] Low_4096 = FileSystem.resources(Properties.Resources.Low_4096);
-        public static double[] Mean_2048 = FileSystem.resources(Properties.Resources.Mean_2048);
-        public static double[] Mean_256 = FileSystem.resources(Properties.Resources.Mean_256);
-        public static double[] Mean_4096 = FileSystem.resources(Properties.Resources.Mean_4096);
-    }
-
     class Program
     {
+        public static class Datasets
+        {
+            public static double[] High_256 = resources(Properties.Resources.High_256);
+            public static double[] High_4096 = resources(Properties.Resources.High_4096);
+            public static double[] High_2048 = resources(Properties.Resources.High_2048);
+            public static double[] Low_256 = resources(Properties.Resources.Low_256);
+            public static double[] Low_2048 = resources(Properties.Resources.Low_2048);
+            public static double[] Low_4096 = resources(Properties.Resources.Low_4096);
+            public static double[] Mean_2048 = resources(Properties.Resources.Mean_2048);
+            public static double[] Mean_256 = resources(Properties.Resources.Mean_256);
+            public static double[] Mean_4096 = resources(Properties.Resources.Mean_4096);
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Please choose one of the following:");
@@ -26,16 +25,17 @@ namespace CMP1124M_Assignment_2
             Console.WriteLine("2 - Mean 256");
             Console.WriteLine("1 - Low 256");
             Console.Write("Data set: ");
-            int user_input = Interaction.input_validation(Console.ReadLine(), 3);
+            int user_input = input_validation(Console.ReadLine(), 3);
             Console.Clear();
-            Interaction.Arrays_Sorted Arrays_Sorted = Interaction.run_sort(user_input, false);
+            Arrays_Sorted Arrays_Sorted = run_sort(user_input, false);
             Console.WriteLine();
             Console.Write("Press any button to continue");
             Console.ReadLine();
             Console.Clear();
             Console.Write("What value do you want to search for?");
-            double user_selection = Interaction.entry_validation(Console.ReadLine());
-            Searching.binary_search_alg(user_selection, Arrays_Sorted.ascending_sorted);
+            double user_selection = entry_validation(Console.ReadLine());
+            binary_search_alg(user_selection, Arrays_Sorted.ascending_sorted);
+            linear_search(user_selection, Arrays_Sorted.ascending_sorted);
             Console.WriteLine("Now for the larger data sets:");
             Console.WriteLine("1 - Low 2048");
             Console.WriteLine("2 - Low 4096");
@@ -44,21 +44,22 @@ namespace CMP1124M_Assignment_2
             Console.WriteLine("5 - High 2048");
             Console.WriteLine("6 - High 4096");
             Console.Write("Data set: ");
-            user_input = Interaction.input_validation(Console.ReadLine(), 6);
+            user_input = input_validation(Console.ReadLine(), 6);
             Console.Clear();
-            Interaction.run_sort(user_input, true);
+            run_sort(user_input, true);
             Console.WriteLine();
             Console.Write("Press any button to continue");
             Console.ReadLine();
             Console.Clear();
             Console.Write("Enter a value to search for");
-            user_selection = Interaction.entry_validation(Console.ReadLine());
-            Arrays_Sorted = Interaction.run_sort(user_input, true);
-            Searching.binary_search_alg(user_selection, Arrays_Sorted.ascending_sorted);
+            user_selection = entry_validation(Console.ReadLine());
+            Arrays_Sorted = run_sort(user_input, true);
+            binary_search_alg(user_selection, Arrays_Sorted.ascending_sorted);
+            linear_search(user_selection, Arrays_Sorted.ascending_sorted);
             for (int data_set = 0; data_set < 3; data_set = data_set + 1)
             {
-                Arrays_Sorted = Interaction.array_sort(Interaction.array_merging(data_set));
-                Interaction.handle_search(Arrays_Sorted.ascending_sorted);
+                Arrays_Sorted = array_sort(array_merging(data_set));
+                searching(Arrays_Sorted.ascending_sorted);
             }
             Console.Write("Would you like to go again?(y/n)");
             if (Console.ReadLine() == "y")
@@ -68,39 +69,23 @@ namespace CMP1124M_Assignment_2
             }
             Environment.Exit(0);
         }
-    }
 
-    class FileSystem
-    {
         public static double[] resources(string resource)
         {
-            try
+            string[] array_version = resource.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+            List<double> list_format = new List<double>();
+            foreach (string element in array_version)
             {
-                string[] array_version = resource.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-                List<double> list_format = new List<double>();
-                foreach (string element in array_version)
+                double number;
+                if (Double.TryParse(element, out number))
                 {
-                    double number;
-                    if (Double.TryParse(element, out number))
-                    {
-                        list_format.Add(number);
-                    }
+                    list_format.Add(number);
                 }
-                double[] return_array = list_format.ToArray();
-                return return_array;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception: " + e.Message);
-                Console.ReadLine();
-                Environment.Exit(0);
-                return null;
-            }
+            double[] return_array = list_format.ToArray();
+            return return_array;
         }
-    }
 
-    class Interaction
-    {
         public static int input_validation(string raw, int max)
         {
             int validated = 0;
@@ -136,22 +121,24 @@ namespace CMP1124M_Assignment_2
         public static Arrays_Sorted run_sort(int selection, bool large_data_set)
         {
             Arrays_Sorted return_vals = new Arrays_Sorted();
-            double[] target = chosen_array(selection, large_data_set);
-            int iterations = Sorting.array_size_finder(target);
-            BST.Tree_Info bst_tree = BST.init_tree(target);
-            BST.Tree binary_tree = bst_tree.binary_tree;
-            Sorting.sorted_ascending_array.Clear();
-            Sorting.sorted_descending_array.Clear();
+            double[] target = chosen_array(selection, false);
+            int iterations = array_size_finder(target);
+            Tree_Info bst_tree = init_tree(target);
+            Tree binary_tree = bst_tree.binary_tree;
+            sorted_ascending_array.Clear();
+            sorted_descending_array.Clear();
             Console.WriteLine();
+            bubble_sort_ascending(target);
             Console.WriteLine("These are the values at every {0}th value in ascending order:", iterations);
-            Sorting.Binary_st_ascending(bst_tree.curr_root);
-            double[] ascending_sorted = Sorting.sorted_ascending_array.ToArray();
+            Binary_st_ascending(bst_tree.curr_root);
+            double[] ascending_sorted = sorted_ascending_array.ToArray();
             display_values(ascending_sorted, iterations, large_data_set);
             return_vals.ascending_sorted = ascending_sorted;
             Console.WriteLine();
+            bubble_sort_descending(target);
             Console.WriteLine("These are the values at every {0}th value in descending order:", iterations);
-            Sorting.Binary_st_descending(bst_tree.curr_root);
-            double[] descending_sorted = Sorting.sorted_descending_array.ToArray();
+            Binary_st_descending(bst_tree.curr_root);
+            double[] descending_sorted = sorted_descending_array.ToArray();
             display_values(descending_sorted, iterations, large_data_set);
             return_vals.descending_sorted = descending_sorted;
             return return_vals;
@@ -161,20 +148,20 @@ namespace CMP1124M_Assignment_2
         {
             Arrays_Sorted return_vals = new Arrays_Sorted();
             int iterations = 10;
-            BST.Tree_Info direct_bst_tree = BST.init_tree(target);
-            BST.Tree binary_tree = direct_bst_tree.binary_tree;
-            Sorting.sorted_ascending_array.Clear();
-            Sorting.sorted_descending_array.Clear();
+            Tree_Info direct_bst_tree = init_tree(target);
+            Tree binary_tree = direct_bst_tree.binary_tree;
+            sorted_ascending_array.Clear();
+            sorted_descending_array.Clear();
             Console.WriteLine();
             Console.WriteLine("These are the values at every {0}th value in ascending order:", iterations);
-            Sorting.Binary_st_ascending(direct_bst_tree.curr_root);
-            double[] ascending_sorted = Sorting.sorted_ascending_array.ToArray();
+            Binary_st_ascending(direct_bst_tree.curr_root);
+            double[] ascending_sorted = sorted_ascending_array.ToArray();
             display_values(ascending_sorted, iterations, false);
             return_vals.ascending_sorted = ascending_sorted;
             Console.WriteLine();
             Console.WriteLine("These are the values at every {0}th value in descending order:", iterations);
-            Sorting.Binary_st_descending(direct_bst_tree.curr_root);
-            double[] descending_sorted = Sorting.sorted_descending_array.ToArray();
+            Binary_st_descending(direct_bst_tree.curr_root);
+            double[] descending_sorted = sorted_descending_array.ToArray();
             display_values(descending_sorted, iterations, false);
             return_vals.descending_sorted = descending_sorted;
             return return_vals;
@@ -195,21 +182,21 @@ namespace CMP1124M_Assignment_2
             }
         }
 
-        public static double[] chosen_array(int selection, bool large_data_set)
+        public static double[] chosen_array(int selection, bool big)
         {
             double[] chosen_data = null;
-            if (large_data_set == false)
+            if (big == false)
             {
                 switch (selection)
                 {
                     case 1:
-                        chosen_data = Globals.Low_256;
+                        chosen_data = Datasets.Low_256;
                         break;
                     case 2:
-                        chosen_data = Globals.Mean_256;
+                        chosen_data = Datasets.Mean_256;
                         break;
                     case 3:
-                        chosen_data = Globals.High_256;
+                        chosen_data = Datasets.High_256;
                         break;
                 }
             }
@@ -218,22 +205,22 @@ namespace CMP1124M_Assignment_2
                 switch (selection)
                 {
                     case 1:
-                        chosen_data = Globals.Low_2048;
+                        chosen_data = Datasets.Low_2048;
                         break;
                     case 2:
-                        chosen_data = Globals.Low_4096;
+                        chosen_data = Datasets.Low_4096;
                         break;
                     case 3:
-                        chosen_data = Globals.Mean_2048;
+                        chosen_data = Datasets.Mean_2048;
                         break;
                     case 4:
-                        chosen_data = Globals.Mean_4096;
+                        chosen_data = Datasets.Mean_4096;
                         break;
                     case 5:
-                        chosen_data = Globals.High_2048;
+                        chosen_data = Datasets.High_2048;
                         break;
                     case 6:
-                        chosen_data = Globals.High_4096;
+                        chosen_data = Datasets.High_4096;
                         break;
                 }
             }
@@ -248,18 +235,18 @@ namespace CMP1124M_Assignment_2
             switch (array_size_finder)
             {
                 case 0:
-                    lower_arr = Globals.Low_256;
-                    upper_arr = Globals.High_256;
+                    lower_arr = Datasets.Low_256;
+                    upper_arr = Datasets.High_256;
                     size = 256;
                     break;
                 case 1:
-                    lower_arr = Globals.Low_2048;
-                    upper_arr = Globals.High_2048;
+                    lower_arr = Datasets.Low_2048;
+                    upper_arr = Datasets.High_2048;
                     size = 2048;
                     break;
                 case 2:
-                    lower_arr = Globals.Low_4096;
-                    upper_arr = Globals.High_4096;
+                    lower_arr = Datasets.Low_4096;
+                    upper_arr = Datasets.High_4096;
                     size = 4096;
                     break;
             }
@@ -270,20 +257,18 @@ namespace CMP1124M_Assignment_2
             return merged_array;
         }
 
-        public static void handle_search(double[] merged_array)
+        public static void searching(double[] merged_array)
         {
             Console.WriteLine();
             Console.Write("Press any button to continue");
             Console.ReadLine();
             Console.Clear();
             Console.Write("enter a value you want to search for: ");
-            double user_selection = Interaction.entry_validation(Console.ReadLine());
-            Searching.binary_search_alg(user_selection, merged_array);
+            double user_selection = entry_validation(Console.ReadLine());
+            binary_search_alg(user_selection, merged_array);
+            linear_search(user_selection, merged_array);
         }
-    }
 
-    class Sorting
-    {
         public static List<double> sorted_ascending_array = new List<double>();
         public static List<double> sorted_descending_array = new List<double>();
 
@@ -301,7 +286,7 @@ namespace CMP1124M_Assignment_2
                     return 10;
             }
         }
-        public static void Binary_st_ascending(BST.Node root)
+        public static void Binary_st_ascending(Node root)
         {
             if (root == null)
             {
@@ -312,7 +297,7 @@ namespace CMP1124M_Assignment_2
             Binary_st_ascending(root.right);
         }
 
-        public static void Binary_st_descending(BST.Node root)
+        public static void Binary_st_descending(Node root)
         {
             if (root == null)
             {
@@ -322,10 +307,7 @@ namespace CMP1124M_Assignment_2
             sorted_descending_array.Add(root.value);
             Binary_st_descending(root.left);
         }
-    }
 
-    class Searching
-    {
         public static void value_search(double request, double[] in_array)
         {
             List<int> indexes = new List<int>();
@@ -374,6 +356,48 @@ namespace CMP1124M_Assignment_2
         {
             public double value;
             public int index;
+        }
+
+        public static void bubble_sort_ascending(double[] input_arr)
+        {
+            int ops = 0;
+            int increments = array_size_finder(input_arr);
+            double temp = 0;
+            for (int write = 0; write < input_arr.Length; write++)
+            {
+                for (int sort = 0; sort < input_arr.Length - 1; sort++)
+                {
+                    if (input_arr[sort] > input_arr[sort + 1])
+                    {
+                        temp = input_arr[sort + 1];
+                        input_arr[sort + 1] = input_arr[sort];
+                        input_arr[sort] = temp;
+                        ops = ops + 1;
+                    }
+                }
+            }
+            Console.WriteLine("Total operations for bubble sort ASC: {0}", ops);
+        }
+
+        public static void bubble_sort_descending(double[] input_arr)
+        {
+            int ops = 0;
+            int increments = array_size_finder(input_arr);
+            double temp = 0;
+            for (int write = 0; write < input_arr.Length; write++)
+            {
+                for (int sort = 1; sort < input_arr.Length; sort++)
+                {
+                    if (input_arr[sort] > input_arr[sort - 1])
+                    {
+                        temp = input_arr[sort - 1];
+                        input_arr[sort - 1] = input_arr[sort];
+                        input_arr[sort] = temp;
+                        ops = ops + 1;
+                    }
+                }
+            }
+            Console.WriteLine("Total operations for bubble sort DSC: {0}", ops);
         }
 
         public static void binary_search_alg(double request, double[] in_array)
@@ -451,21 +475,55 @@ namespace CMP1124M_Assignment_2
                 {
                     Console.WriteLine("Your number {3} couldn't be found, but we found {0} at index number {1}.", closest_smaller.value, closest_smaller.index, diff_sm, request);
                 }
-                Console.ReadLine();
-                Console.Clear();
-            }
-            else
-            {
-                Console.WriteLine();
-                Console.WriteLine("Press any button to continue");
-                Console.ReadLine();
-                Console.Clear();
             }
         }
-    }
 
-    class BST
-    {
+        public static void linear_search(double target, double[] given_array)
+        {
+            int array_size = given_array.Length;
+            int ops = 0;
+            bool found = false;
+            double closest_num = 0;
+            int closest_index = 0;
+            double current_diff = 99999;
+            for (int iteration = 0; iteration < array_size - 1; iteration++)
+            {
+                if (given_array[iteration] == target)
+                {
+                    found = true;
+                    Console.WriteLine("Number found at index {0}", iteration);
+                }
+                else
+                {
+                    if (!found)
+                    {
+                        ops = ops + 1;
+                        double difference = target - given_array[iteration];
+                        if (difference < 0)
+                        {
+                            difference = difference * -1;
+                        }
+                        if (difference < current_diff)
+                        {
+                            closest_index = iteration;
+                            closest_num = given_array[iteration];
+                            current_diff = difference;
+                        }
+                    }
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine("Linear search:");
+            if (!found)
+            {
+                Console.WriteLine("Could not find your numbers. Instead found {0} at index {1} which is the closest.", closest_num, closest_index);
+            }
+            Console.WriteLine("Linear search for {0} took {1} iterations before it was complete/found the first instance.", target, ops);
+            Console.WriteLine();
+            Console.ReadLine();
+            Console.Clear();
+        }
+
         public struct Tree_Info
         {
             public Tree binary_tree;
@@ -476,7 +534,7 @@ namespace CMP1124M_Assignment_2
         {
             Node root = null;
             Tree binary_tree = new Tree();
-            for (int i = 0; i < target_arr.Length; i = i +1)
+            for (int i = 0; i < target_arr.Length; i = i + 1)
             {
                 root = binary_tree.insert(root, target_arr[i]);
             }
