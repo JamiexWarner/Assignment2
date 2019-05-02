@@ -16,3 +16,12 @@ D:\Documents\Uni\Algorithms and Complexities\Jamie\Assignment2\CMP1124M_Assignme
 D:\Documents\Uni\Algorithms and Complexities\Jamie\Assignment2\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.csproj.CoreCompileInputs.cache
 D:\Documents\Uni\Algorithms and Complexities\Jamie\Assignment2\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.exe
 D:\Documents\Uni\Algorithms and Complexities\Jamie\Assignment2\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.pdb
+C:\Users\jamie\Desktop\Assignment2\CMP1124M_Assignment_2\CMP1124M_Assignment_2\bin\Debug\CMP1124M_Assignment_2.exe.config
+C:\Users\jamie\Desktop\Assignment2\CMP1124M_Assignment_2\CMP1124M_Assignment_2\bin\Debug\CMP1124M_Assignment_2.exe
+C:\Users\jamie\Desktop\Assignment2\CMP1124M_Assignment_2\CMP1124M_Assignment_2\bin\Debug\CMP1124M_Assignment_2.pdb
+C:\Users\jamie\Desktop\Assignment2\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.csprojAssemblyReference.cache
+C:\Users\jamie\Desktop\Assignment2\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.Properties.Resources.resources
+C:\Users\jamie\Desktop\Assignment2\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.csproj.GenerateResource.cache
+C:\Users\jamie\Desktop\Assignment2\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.csproj.CoreCompileInputs.cache
+C:\Users\jamie\Desktop\Assignment2\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.exe
+C:\Users\jamie\Desktop\Assignment2\CMP1124M_Assignment_2\CMP1124M_Assignment_2\obj\Debug\CMP1124M_Assignment_2.pdb
